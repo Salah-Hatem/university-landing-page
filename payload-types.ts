@@ -68,6 +68,13 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    media: Media;
+    universities: University;
+    programs: Program;
+    events: Event;
+    graduateStories: GraduateStory;
+    news: News;
+    studies: Study;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,6 +83,13 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    universities: UniversitiesSelect<false> | UniversitiesSelect<true>;
+    programs: ProgramsSelect<false> | ProgramsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    graduateStories: GraduateStoriesSelect<false> | GraduateStoriesSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
+    studies: StudiesSelect<false> | StudiesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -85,8 +99,36 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+    footer: Footer;
+    homePage: HomePage;
+    heroSection: HeroSection;
+    experienceSection: ExperienceSection;
+    universitiesSection: UniversitiesSection;
+    marqueeRibbonSection: MarqueeRibbonSection;
+    coreMajorsSection: CoreMajorsSection;
+    eventsSection: EventsSection;
+    graduateSuccessSection: GraduateSuccessSection;
+    admissionsSection: AdmissionsSection;
+    newsSection: NewsSection;
+    contactSection: ContactSection;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    homePage: HomePageSelect<false> | HomePageSelect<true>;
+    heroSection: HeroSectionSelect<false> | HeroSectionSelect<true>;
+    experienceSection: ExperienceSectionSelect<false> | ExperienceSectionSelect<true>;
+    universitiesSection: UniversitiesSectionSelect<false> | UniversitiesSectionSelect<true>;
+    marqueeRibbonSection: MarqueeRibbonSectionSelect<false> | MarqueeRibbonSectionSelect<true>;
+    coreMajorsSection: CoreMajorsSectionSelect<false> | CoreMajorsSectionSelect<true>;
+    eventsSection: EventsSectionSelect<false> | EventsSectionSelect<true>;
+    graduateSuccessSection: GraduateSuccessSectionSelect<false> | GraduateSuccessSectionSelect<true>;
+    admissionsSection: AdmissionsSectionSelect<false> | AdmissionsSectionSelect<true>;
+    newsSection: NewsSectionSelect<false> | NewsSectionSelect<true>;
+    contactSection: ContactSectionSelect<false> | ContactSectionSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -142,6 +184,190 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe this media item for accessibility and search.
+   */
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "universities".
+ */
+export interface University {
+  id: number;
+  name: string;
+  logo?: (number | null) | Media;
+  image?: (number | null) | Media;
+  marqueeLogo?: (number | null) | Media;
+  /**
+   * Use a hex color such as #273480.
+   */
+  brandColor?: string | null;
+  description?: string | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  highlights?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs".
+ */
+export interface Program {
+  id: number;
+  title: string;
+  /**
+   * For example: 7 Programs.
+   */
+  programCountLabel?: string | null;
+  description?: string | null;
+  image?: (number | null) | Media;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  date: string;
+  /**
+   * Optional label such as April 2026.
+   */
+  dateLabel?: string | null;
+  time?: string | null;
+  location?: string | null;
+  excerpt?: string | null;
+  image?: (number | null) | Media;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "graduateStories".
+ */
+export interface GraduateStory {
+  id: number;
+  graduateName: string;
+  /**
+   * For example: 2025 Grad.
+   */
+  graduationYear?: string | null;
+  role?: string | null;
+  company?: string | null;
+  /**
+   * Partner school label shown on the card, e.g. NOVA, Coventry, or TKH.
+   */
+  school?: string | null;
+  quote: string;
+  image?: (number | null) | Media;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  category?: string | null;
+  title: string;
+  date: string;
+  excerpt?: string | null;
+  /**
+   * Text color token applied to the category label.
+   */
+  categoryColor?: ('tkh-primary' | 'nova' | 'uni-secondary') | null;
+  thumbnail?: (number | null) | Media;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+  };
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studies".
+ */
+export interface Study {
+  id: number;
+  label?: string | null;
+  href?: string | null;
+  openInNewTab?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -163,10 +389,39 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'universities';
+        value: number | University;
+      } | null)
+    | ({
+        relationTo: 'programs';
+        value: number | Program;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'graduateStories';
+        value: number | GraduateStory;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
+      } | null)
+    | ({
+        relationTo: 'studies';
+        value: number | Study;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -233,6 +488,152 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "universities_select".
+ */
+export interface UniversitiesSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  image?: T;
+  marqueeLogo?: T;
+  brandColor?: T;
+  description?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+      };
+  highlights?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs_select".
+ */
+export interface ProgramsSelect<T extends boolean = true> {
+  title?: T;
+  programCountLabel?: T;
+  description?: T;
+  image?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+      };
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  date?: T;
+  dateLabel?: T;
+  time?: T;
+  location?: T;
+  excerpt?: T;
+  image?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+      };
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "graduateStories_select".
+ */
+export interface GraduateStoriesSelect<T extends boolean = true> {
+  graduateName?: T;
+  graduationYear?: T;
+  role?: T;
+  company?: T;
+  school?: T;
+  quote?: T;
+  image?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  category?: T;
+  title?: T;
+  date?: T;
+  excerpt?: T;
+  categoryColor?: T;
+  thumbnail?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+      };
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studies_select".
+ */
+export interface StudiesSelect<T extends boolean = true> {
+  label?: T;
+  href?: T;
+  openInNewTab?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -270,6 +671,979 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  logo?: (number | null) | Media;
+  topLinks?: {
+    universities?:
+      | {
+          label?: string | null;
+          href?: string | null;
+          openInNewTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    resources?:
+      | {
+          label?: string | null;
+          href?: string | null;
+          openInNewTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  primaryNavigation?:
+    | {
+        label: string;
+        hasMegaMenu?: boolean | null;
+        href?: string | null;
+        openInNewTab?: boolean | null;
+        megaMenu?: {
+          tabs?:
+            | (
+                | {
+                    image?: (number | null) | Media;
+                    description?: string | null;
+                    previewImage?: (number | null) | Media;
+                    subLinks?:
+                      | (
+                          | {
+                              label?: string | null;
+                              href?: string | null;
+                              openInNewTab?: boolean | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'textLink';
+                            }
+                          | {
+                              image?: (number | null) | Media;
+                              label?: string | null;
+                              href?: string | null;
+                              openInNewTab?: boolean | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'photoLink';
+                            }
+                          | {
+                              items?: (number | Study)[] | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'studyLinks';
+                            }
+                          | {
+                              heading?: string | null;
+                              links?:
+                                | {
+                                    label?: string | null;
+                                    href?: string | null;
+                                    openInNewTab?: boolean | null;
+                                    highlighted?: boolean | null;
+                                    id?: string | null;
+                                  }[]
+                                | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'linkGroup';
+                            }
+                        )[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'imageDescriptionTab';
+                  }
+                | {
+                    title: string;
+                    description?: string | null;
+                    previewImage?: (number | null) | Media;
+                    subLinks?:
+                      | (
+                          | {
+                              label?: string | null;
+                              href?: string | null;
+                              openInNewTab?: boolean | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'textLink';
+                            }
+                          | {
+                              image?: (number | null) | Media;
+                              label?: string | null;
+                              href?: string | null;
+                              openInNewTab?: boolean | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'photoLink';
+                            }
+                          | {
+                              items?: (number | Study)[] | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'studyLinks';
+                            }
+                          | {
+                              heading?: string | null;
+                              links?:
+                                | {
+                                    label?: string | null;
+                                    href?: string | null;
+                                    openInNewTab?: boolean | null;
+                                    highlighted?: boolean | null;
+                                    id?: string | null;
+                                  }[]
+                                | null;
+                              id?: string | null;
+                              blockName?: string | null;
+                              blockType: 'linkGroup';
+                            }
+                        )[]
+                      | null;
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'titleDescriptionTab';
+                  }
+              )[]
+            | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  searchLabel?: string | null;
+  contactCta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  applyCta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  mobileMenu?: {
+    openLabel?: string | null;
+    closeLabel?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  logo?: (number | null) | Media;
+  description?: string | null;
+  contact?: {
+    heading?: string | null;
+    phone?: string | null;
+    address?: string | null;
+    email?: string | null;
+    cta?: {
+      label?: string | null;
+      href?: string | null;
+      openInNewTab?: boolean | null;
+      id?: string | null;
+    };
+  };
+  search?: {
+    heading?: string | null;
+    placeholder?: string | null;
+    buttonLabel?: string | null;
+  };
+  linkColumns?:
+    | {
+        title?: string | null;
+        links?:
+          | {
+              label?: string | null;
+              href?: string | null;
+              openInNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  moreLinks?:
+    | {
+        label?: string | null;
+        href?: string | null;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform?: ('facebook' | 'instagram' | 'linkedin') | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  legalLinks?:
+    | {
+        label?: string | null;
+        href?: string | null;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage".
+ */
+export interface HomePage {
+  id: number;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    shareImage?: (number | null) | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "heroSection".
+ */
+export interface HeroSection {
+  id: number;
+  heading: string;
+  description?: string | null;
+  primaryCta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  secondaryCta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  image?: (number | null) | Media;
+  backgroundImage?: (number | null) | Media;
+  backgroundVideo?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experienceSection".
+ */
+export interface ExperienceSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  tabs?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        image?: (number | null) | Media;
+        stat?: {
+          value?: string | null;
+          label?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "universitiesSection".
+ */
+export interface UniversitiesSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  featuredUniversities?: (number | University)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marqueeRibbonSection".
+ */
+export interface MarqueeRibbonSection {
+  id: number;
+  bands?:
+    | {
+        label?: string | null;
+        /**
+         * Use a hex color such as #2F67A2.
+         */
+        backgroundColor?: string | null;
+        universities?: (number | University)[] | null;
+        manualItems?:
+          | {
+              label?: string | null;
+              image?: (number | null) | Media;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coreMajorsSection".
+ */
+export interface CoreMajorsSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  programs?: (number | Program)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsSection".
+ */
+export interface EventsSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  events?: (number | Event)[] | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "graduateSuccessSection".
+ */
+export interface GraduateSuccessSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  stats?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  stories?: (number | GraduateStory)[] | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admissionsSection".
+ */
+export interface AdmissionsSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  steps?:
+    | {
+        number?: string | null;
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsSection".
+ */
+export interface NewsSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  articles?: (number | News)[] | null;
+  cta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactSection".
+ */
+export interface ContactSection {
+  id: number;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  fields?:
+    | {
+        label?: string | null;
+        placeholder?: string | null;
+        required?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  submitCta?: {
+    label?: string | null;
+    href?: string | null;
+    openInNewTab?: boolean | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  topLinks?:
+    | T
+    | {
+        universities?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+        resources?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+      };
+  primaryNavigation?:
+    | T
+    | {
+        label?: T;
+        hasMegaMenu?: T;
+        href?: T;
+        openInNewTab?: T;
+        megaMenu?:
+          | T
+          | {
+              tabs?:
+                | T
+                | {
+                    imageDescriptionTab?:
+                      | T
+                      | {
+                          image?: T;
+                          description?: T;
+                          previewImage?: T;
+                          subLinks?:
+                            | T
+                            | {
+                                textLink?:
+                                  | T
+                                  | {
+                                      label?: T;
+                                      href?: T;
+                                      openInNewTab?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                photoLink?:
+                                  | T
+                                  | {
+                                      image?: T;
+                                      label?: T;
+                                      href?: T;
+                                      openInNewTab?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                studyLinks?:
+                                  | T
+                                  | {
+                                      items?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                linkGroup?:
+                                  | T
+                                  | {
+                                      heading?: T;
+                                      links?:
+                                        | T
+                                        | {
+                                            label?: T;
+                                            href?: T;
+                                            openInNewTab?: T;
+                                            highlighted?: T;
+                                            id?: T;
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    titleDescriptionTab?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          previewImage?: T;
+                          subLinks?:
+                            | T
+                            | {
+                                textLink?:
+                                  | T
+                                  | {
+                                      label?: T;
+                                      href?: T;
+                                      openInNewTab?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                photoLink?:
+                                  | T
+                                  | {
+                                      image?: T;
+                                      label?: T;
+                                      href?: T;
+                                      openInNewTab?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                studyLinks?:
+                                  | T
+                                  | {
+                                      items?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                linkGroup?:
+                                  | T
+                                  | {
+                                      heading?: T;
+                                      links?:
+                                        | T
+                                        | {
+                                            label?: T;
+                                            href?: T;
+                                            openInNewTab?: T;
+                                            highlighted?: T;
+                                            id?: T;
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+            };
+        id?: T;
+      };
+  searchLabel?: T;
+  contactCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  applyCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  mobileMenu?:
+    | T
+    | {
+        openLabel?: T;
+        closeLabel?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  description?: T;
+  contact?:
+    | T
+    | {
+        heading?: T;
+        phone?: T;
+        address?: T;
+        email?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+      };
+  search?:
+    | T
+    | {
+        heading?: T;
+        placeholder?: T;
+        buttonLabel?: T;
+      };
+  linkColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              openInNewTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  moreLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        shareImage?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "heroSection_select".
+ */
+export interface HeroSectionSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  primaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  image?: T;
+  backgroundImage?: T;
+  backgroundVideo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experienceSection_select".
+ */
+export interface ExperienceSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  tabs?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        stat?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "universitiesSection_select".
+ */
+export interface UniversitiesSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  featuredUniversities?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marqueeRibbonSection_select".
+ */
+export interface MarqueeRibbonSectionSelect<T extends boolean = true> {
+  bands?:
+    | T
+    | {
+        label?: T;
+        backgroundColor?: T;
+        universities?: T;
+        manualItems?:
+          | T
+          | {
+              label?: T;
+              image?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coreMajorsSection_select".
+ */
+export interface CoreMajorsSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  programs?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "eventsSection_select".
+ */
+export interface EventsSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  events?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "graduateSuccessSection_select".
+ */
+export interface GraduateSuccessSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  stats?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  stories?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "admissionsSection_select".
+ */
+export interface AdmissionsSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  steps?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsSection_select".
+ */
+export interface NewsSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  articles?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contactSection_select".
+ */
+export interface ContactSectionSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  fields?:
+    | T
+    | {
+        label?: T;
+        placeholder?: T;
+        required?: T;
+        id?: T;
+      };
+  submitCta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
