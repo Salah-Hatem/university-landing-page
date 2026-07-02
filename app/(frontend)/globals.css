@@ -1,26 +1,328 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-family-title: var(--font-futura-title), Futura, "Trebuchet MS", Arial,
+  sans-serif;
+  --font-family-body: var(--font-futura-body), "Futura Bk BT", Futura,
+  "Trebuchet MS", Arial, sans-serif;
+  --font-family-cta: var(--font-futura-cta), "Futura Md BT", Futura,
+  "Trebuchet MS", Arial, sans-serif;
+
+  --font-family-mdcn: var(--font-futura-mdcn), "Futura MdCn BT", Futura, "Trebuchet MS", Arial, sans-serif;
+
+  --font-family-number: var(--font-futura-xblk-cn-it), "Futura XBlkCn BT", Futura, "Trebuchet MS", Arial, sans-serif;
+
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 26px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 48px;
+  --font-size-5xl: 72px;
+
+  /* Fluid heading scale — clamp(mobile, fluid, desktop), anchored to the
+     mobile (687px) and desktop (1920px) viewports below. */
+  --font-size-h1: clamp(2.5rem, 1.385rem + 2.595vw, 4.5rem);   /* 40 → 72 */
+  --font-size-h2: clamp(1.75rem, 1.053rem + 1.622vw, 3rem);    /* 28 → 48 */
+  --font-size-h3: clamp(1.625rem, 1.416rem + 0.487vw, 2rem);   /* 26 → 32 */
+  --font-size-h4: clamp(1.375rem, 1.236rem + 0.324vw, 1.625rem); /* 22 → 26 */
+  --font-size-h5: clamp(1.25rem, 1.111rem + 0.324vw, 1.5rem);  /* 20 → 24 */
+  --font-size-h6: clamp(1.125rem, 1.055rem + 0.162vw, 1.25rem); /* 18 → 20 */
+
+  /* Fluid body scale */
+  --font-size-body-1: clamp(1rem, 0.721rem + 0.649vw, 1.5rem); /* 16 → 24 */
+
+  /* Fluid button scale */
+  --font-size-button-1: clamp(1rem, 0.861rem + 0.324vw, 1.25rem); /* 16 → 20 */
+
+  --line-height-none: 1;
+  --line-height-tight: 1;
+  --line-height-normal: 1.2;
+  --letter-spacing-none: 0;
+  --letter-spacing-wide: 1px;
+
+  --text-primary: #101828;
+  --text-secondary: #4a5565;
+  --text-invert: #ffffff;
+  --text-tkh-primary: #e84925;
+  --text-uni-secondary: #273480;
+  --text-negative: #d20000;
+
+  --surface-primary: #ffffff;
+  --surface-invert: #101828;
+  --surface-brand-secondary-dark: #101828;
+  --surface-tkh-primary: #e84925;
+  --surface-uni-secondary: #273480;
+  --surface-uni-secondary-light: #5b83c2;
+  --surface-nova: #348141;
+  --surface-coventry: #2f67a2;
+  --surface-inactive: #808489;
+
+  --stroke-primary: #b1b3b6;
+  --stroke-inactive: #808489;
+  --stroke-tkh-primary: #e84925;
+  --stroke-uni-secondary: #273480;
+  --stroke-negative: #d20000;
+
+  --icon-primary: #101828;
+  --icon-invert: #ffffff;
+  --icon-tkh-primary: #e84925;
+  --icon-inactive: #808489;
+  --icon-negative: #d20000;
+
+  --neutral-150: #c6c6c6;
+
+  --space-none: 0;
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+  --space-3xl: 48px;
+  --space-4xl: 56px;
+  --space-5xl: 64px;
+  --space-7xl: 80px;
+  --space-8xl: 120px;
+
+  --padding-top-xl: var(--space-xl);
+
+  --corner-radius-none: 0;
+  --corner-radius-l: 32px;
+  --corner-radius-full: 100px;
+
+  --viewport-mobile: 687px;
+  --viewport-tablet: 1281px;
+  --viewport-desktop: 1920px;
+
+  --background: var(--surface-primary);
+  --foreground: var(--text-primary);
 }
+
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-invert: var(--text-invert);
+  --color-text-tkh-primary: var(--text-tkh-primary);
+  --color-text-uni-secondary: var(--text-uni-secondary);
+  --color-text-negative: var(--text-negative);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-invert: var(--surface-invert);
+  --color-surface-brand-secondary-dark: var(--surface-brand-secondary-dark);
+  --color-surface-tkh-primary: var(--surface-tkh-primary);
+  --color-surface-uni-secondary: var(--surface-uni-secondary);
+  --color-surface-uni-secondary-light: var(--surface-uni-secondary-light);
+  --color-surface-nova: var(--surface-nova);
+  --color-surface-coventry: var(--surface-coventry);
+  --color-surface-inactive: var(--surface-inactive);
+  --color-stroke-primary: var(--stroke-primary);
+  --color-stroke-inactive: var(--stroke-inactive);
+  --color-stroke-tkh-primary: var(--stroke-tkh-primary);
+  --color-stroke-uni-secondary: var(--stroke-uni-secondary);
+  --color-stroke-negative: var(--stroke-negative);
+  --color-icon-primary: var(--icon-primary);
+  --color-icon-invert: var(--icon-invert);
+  --color-icon-tkh-primary: var(--icon-tkh-primary);
+  --color-icon-inactive: var(--icon-inactive);
+  --color-icon-negative: var(--icon-negative);
+  --color-neutral-150: var(--neutral-150);
+
+  --font-title: var(--font-family-title);
+  --font-body: var(--font-family-body);
+  --font-cta: var(--font-family-cta);
+  --font-mdcn: var(--font-family-mdcn);
+  --font-number: var(--font-family-number);
+
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-base: var(--font-size-base);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+  --text-2xl: var(--font-size-2xl);
+  --text-3xl: var(--font-size-3xl);
+  --text-4xl: var(--font-size-4xl);
+  --text-5xl: var(--font-size-5xl);
+
+  --spacing-none: var(--space-none);
+  --spacing-xxs: var(--space-xxs);
+  --spacing-xs: var(--space-xs);
+  --spacing-s: var(--space-s);
+  --spacing-m: var(--space-m);
+  --spacing-l: var(--space-l);
+  --spacing-xl: var(--space-xl);
+  --spacing-2xl: var(--space-2xl);
+  --spacing-3xl: var(--space-3xl);
+  --spacing-4xl: var(--space-4xl);
+  --spacing-5xl: var(--space-5xl);
+  --spacing-7xl: var(--space-7xl);
+  --spacing-8xl: var(--space-8xl);
+
+  --radius-none: var(--corner-radius-none);
+  --radius-l: var(--corner-radius-l);
+  --radius-full: var(--corner-radius-full);
+
+  --breakpoint-mobile: 687px;
+  --breakpoint-tablet: 1281px;
+  --breakpoint-desktop: 1920px;
+}
+@utility text-number {
+  font-family: var(--font-family-number), sans-serif;
+  font-size: 56px;
+  line-height: 93%;
+}
+@utility text-subtitle-1 {
+  font-family: var(--font-family-cta), sans-serif;
+  font-size: var(--font-size-base, 18px);
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  font-weight: 500;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility text-subtitle-2 {
+  font-family: var(--font-family-cta), sans-serif;
+  font-size: var(--font-size-xs, 14px);
+  font-weight: 500;
+  line-height: normal;
+  font-style: normal;
+  letter-spacing: 1px;
+}
+
+@utility text-button-1 {
+  font-family: var(--font-family-cta), sans-serif;
+  font-size: var(--font-size-button-1);
+  line-height: normal;
+}
+
+@utility text-button-2 {
+  font-family: var(--font-family-cta), sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@utility text-body-1 {
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-body-1);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  line-height: normal;
+}
+
+@utility text-body-2 {
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-base, 18px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+@utility text-H1 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h1);
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+@utility text-H2 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+}
+
+@utility text-H3 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+}
+
+@utility text-H4 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h4);
+  font-weight: 700;
+  font-style: normal;
+  line-height: normal;
+}
+
+@utility text-H5 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h5);
+  font-weight: 700;
+  line-height: normal;
+}
+
+@utility text-H6 {
+  font-family: var(--font-family-title), sans-serif;
+  font-size: var(--font-size-h6);
+  font-weight: 700;
+  line-height: 120%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  /*margin: 0;*/
+}
+
+html {
+  min-height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
 }
 
 body {
+  min-height: 100%;
+  overflow-x: hidden;
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /*font-family: var(--font-family-body);*/
+  /*font-size: var(--font-size-base);*/
+  /*line-height: var(--line-height-tight);*/
+  /*letter-spacing: var(--letter-spacing-none);*/
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+#main-content {
+  min-height: 1080px;
 }
