@@ -102,7 +102,7 @@ export function Button({
             ) : null}
             <span className="grow text-center">{children}</span>
             {buttonIcon && iconPosition === "end" ? (
-                <span aria-hidden="true" className="shrink-0 mobile:ml-auto -ml-10">
+                <span aria-hidden="true" className="shrink-0 mobile:ml-auto">
                     {buttonIcon}
                 </span>
             ) : null}

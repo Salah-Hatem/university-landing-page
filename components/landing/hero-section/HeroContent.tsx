@@ -19,12 +19,12 @@ type HeroContentProps = {
 };
 
 export function HeroContent({
-    animate,
-    description,
-    heading,
-    primaryCta,
-    secondaryCta,
-}: HeroContentProps) {
+                                animate,
+                                description,
+                                heading,
+                                primaryCta,
+                                secondaryCta,
+                            }: HeroContentProps) {
     return (
         <motion.div
             className="absolute inset-x-0 bottom-0 z-20 flex w-full flex-col mobile:flex-row items-end gap-m px-m pb-m mobile:p-14 tablet:p-7xl"
@@ -47,7 +47,9 @@ export function HeroContent({
                         target={primaryCta.openInNewTab ? "_blank" : undefined}
                         variant="secondary"
                     >
+                        <span className="w-full -mr-10 mobile:mr-0" >
                         {primaryCta.label}
+                        </span>
                     </Button>
                     <Button
                         href={secondaryCta.href}
