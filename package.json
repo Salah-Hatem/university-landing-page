@@ -16,6 +16,8 @@
     "@payloadcms/next": "^3.85.1",
     "@payloadcms/richtext-lexical": "^3.85.1",
     "@payloadcms/storage-vercel-blob": "^3.85.1",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "motion": "^12.42.2",
     "next": "16.2.9",
     "payload": "^3.85.1",
