@@ -38,7 +38,7 @@ export function UniversityCard({ university, showBadges = true }: UniversityCard
                     alt={university.name}
                     width={logo?.width ?? 200}
                     height={logo?.height ?? 100}
-                    className="h-auto w-50 tablet:max-w-50"
+                    className="h-auto w-[405px] tablet:max-w-50"
                 />
 
                 <div className="z-9 flex w-full items-center justify-between">

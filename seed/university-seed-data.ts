@@ -18,8 +18,8 @@ import type { UniversitiesSection, University } from "@/payload-types";
 import type { MediaSeed } from "./header-seed-data";
 
 type UniversitySeed = Omit<
-  University,
-  "id" | "logo" | "image" | "marqueeLogo" | "updatedAt" | "createdAt"
+    University,
+    "id" | "logo" | "image" | "marqueeLogo" | "updatedAt" | "createdAt"
 > & {
   key: string;
   logo?: MediaSeed;
@@ -27,9 +27,27 @@ type UniversitySeed = Omit<
   marqueeLogo?: MediaSeed;
 };
 
+// The three rating badges shown on each desktop stage card. Mirrors
+// RATING_BADGES in components/landing/university-partners/data.ts (the render-time
+// fallback) so seeding makes the same content CMS-authored on every university.
+const RATING_BADGES: NonNullable<University["highlights"]> = [
+  {
+    title: "5 stars",
+    description: "Overall Rating & Internationalization\nQS Stars University Ratings",
+  },
+  {
+    title: "Queen’s Award",
+    description: "For Interprise\nInternational Trade 2022",
+  },
+  {
+    title: "12th on world",
+    description: "for international outlook\nThe Young University Rankings 2024",
+  },
+];
+
 export type PartnersSeedData = Omit<
-  UniversitiesSection,
-  "id" | "featuredUniversities" | "updatedAt" | "createdAt"
+    UniversitiesSection,
+    "id" | "featuredUniversities" | "updatedAt" | "createdAt"
 > & {
   universities: UniversitySeed[];
   // Local university `key`s for the four fixed stage slots.
@@ -40,7 +58,7 @@ export const partnersSeedData: PartnersSeedData = {
   eyebrow: "Partner with Excellence",
   heading: "Study with The World’s Top Ranked Universities",
   description:
-    "TKH partners with prestigious European and UK universities to bring their academic excellence to Egypt.",
+      "TKH partners with prestigious European and UK universities to bring their academic excellence to Egypt.",
   universities: [
     {
       key: "coventry",
@@ -49,6 +67,7 @@ export const partnersSeedData: PartnersSeedData = {
       image: { src: "/partners/Coventry.png", alt: "Coventry University campus" },
       marqueeLogo: { src: "/marquee/Coventry-White-s.png", alt: "Coventry University" },
       cta: { label: "Explore Coventry", href: "/universities/coventry", openInNewTab: false },
+      highlights: RATING_BADGES,
       order: 0,
       active: true,
     },
@@ -59,6 +78,7 @@ export const partnersSeedData: PartnersSeedData = {
       image: { src: "/partners/Nova.png", alt: "NOVA University Lisbon campus" },
       marqueeLogo: { src: "/marquee/Nova-White-Full.png", alt: "NOVA University Lisbon" },
       cta: { label: "Explore NOVA", href: "/universities/nova", openInNewTab: false },
+      highlights: RATING_BADGES,
       order: 1,
       active: true,
     },

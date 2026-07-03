@@ -98,7 +98,7 @@ export async function seed(): Promise<void> {
 
     if (!existsSync(filePath)) {
       throw new Error(
-        `Media file not found for "${resolved.src}" (looked in ${filePath}). ` +
+          `Media file not found for "${resolved.src}" (looked in ${filePath}). ` +
           `Add the file under seed/assets/ or fix the path in the seed data.`,
       );
     }
@@ -178,7 +178,7 @@ export async function seed(): Promise<void> {
 
   type AnySubLink = HeaderSeedSubLink;
   async function buildSubLink(
-    sub: AnySubLink,
+      sub: AnySubLink,
   ): Promise<Record<string, unknown>> {
     switch (sub.blockType) {
       case "textLink":
@@ -263,11 +263,11 @@ export async function seed(): Promise<void> {
   }
 
   const linkList = (links: HeaderSeedLink[]) =>
-    links.map((link) => ({
-      label: link.label,
-      href: link.href,
-      openInNewTab: link.openInNewTab ?? false,
-    }));
+      links.map((link) => ({
+        label: link.label,
+        href: link.href,
+        openInNewTab: link.openInNewTab ?? false,
+      }));
 
   await payload.updateGlobal({
     slug: "header",
@@ -348,6 +348,7 @@ export async function seed(): Promise<void> {
         image: await resolveMedia(university.image),
         marqueeLogo: await resolveMedia(university.marqueeLogo),
         cta: university.cta,
+        highlights: university.highlights,
         order: university.order ?? 0,
         active: university.active ?? true,
       },
@@ -633,11 +634,11 @@ export async function seed(): Promise<void> {
 
 // Narrowing helpers derived from the seed data shape.
 type HeaderSeedLink = NonNullable<
-  NonNullable<(typeof headerSeedData)["topLinks"]>["universities"]
+    NonNullable<(typeof headerSeedData)["topLinks"]>["universities"]
 >[number];
 type HeaderSeedNavItem = (typeof headerSeedData)["primaryNavigation"][number];
 type HeaderSeedTab = NonNullable<
-  NonNullable<HeaderSeedNavItem["megaMenu"]>["tabs"]
+    NonNullable<HeaderSeedNavItem["megaMenu"]>["tabs"]
 >[number];
 type HeaderSeedSubLink = NonNullable<HeaderSeedTab["subLinks"]>[number];
 
