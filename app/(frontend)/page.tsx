@@ -1,33 +1,62 @@
-import AdmissionSteps from "@/components/landing-page/admission-steps/AdmissionSteps";
-import ContactSection from "@/components/landing-page/contact-section/ContactSection";
-import CoreMajors from "@/components/landing-page/core-majors/CoreMajors";
-import ExperienceCampus from "@/components/landing-page/experience-campus/ExperienceCampus";
-import Footer from "@/components/landing-page/footer/Footer";
-import GraduateSuccess from "@/components/landing-page/graduate-success/GraduateSuccess";
-import Header from "@/components/landing-page/header/Header";
-import HeroSection from "@/components/landing-page/hero-section/HeroSection";
-import MarqueeRibbon from "@/components/landing-page/marquee-ribbon/MarqueeRibbon";
-import ProudNews from "@/components/landing-page/proud-news/ProudNews";
-import UniversityPartners from "@/components/landing-page/university-partners/UniversityPartners";
-import UpcomingEvents from "@/components/landing-page/upcoming-events/UpcomingEvents";
+import AdmissionSteps from "@/components/landing/admission-steps/AdmissionSteps";
+import ContactSection from "@/components/landing/contact-section/ContactSection";
+import CoreMajors from "@/components/landing/core-majors/CoreMajors";
+import ExperienceCampus from "@/components/landing/experience-campus/ExperienceCampus";
+import Footer from "@/components/landing/footer/Footer";
+import GraduateSuccess from "@/components/landing/graduate-success/GraduateSuccess";
+import {Header} from "@/components/landing/header/Header";
+import {HeroSection} from "@/components/landing/hero-section/HeroSection";
+import MarqueeRibbon from "@/components/landing/marquee-ribbon/MarqueeRibbon";
+import ProudNews from "@/components/landing/proud-news/ProudNews";
+import UniversityPartners from "@/components/landing/university-partners/UniversityPartners";
+import UpcomingEvents from "@/components/landing/upcoming-events/UpcomingEvents";
+import {HeroRevealProvider} from "@/components/landing/hero-section/HeroRevealContext";
+import {Metadata} from "next";
+import {getHeader, getHeroSection, getHomePage} from "@/lib/cms/landing";
+import {getHeaderData} from "@/components/landing/header/data";
+import {getHeroData} from "@/components/landing/hero-section/data";
 
-export default function Home() {
-  return (
-    <>
-      <Header />
-      <main id="main-content">
-        <HeroSection />
-        <ExperienceCampus />
-        <UniversityPartners />
-        <MarqueeRibbon />
-        <CoreMajors />
-        <UpcomingEvents />
-        <GraduateSuccess />
-        <AdmissionSteps />
-        <ProudNews />
-        <ContactSection />
-      </main>
-      <Footer />
-    </>
-  );
+
+export async function generateMetadata(): Promise<Metadata> {
+    const seo = (await getHomePage())?.seo;
+    const shareImage =
+        seo?.shareImage && typeof seo.shareImage === "object"
+            ? (seo.shareImage.url ?? undefined)
+            : undefined;
+
+    return {
+        title: seo?.metaTitle || "The Knowledge Hub Universities",
+        description:
+            seo?.metaDescription ||
+            "A CMS-powered university landing page for The Knowledge Hub Universities.",
+        ...(shareImage ? {openGraph: {images: [{url: shareImage}]}} : {}),
+    };
+}
+
+export default async function Home() {
+    const header = getHeaderData(await getHeader());
+    const hero = getHeroData(await getHeroSection());
+
+    return (
+        <>
+            <HeroRevealProvider>
+
+                <Header header={header}/>
+                <main id="main-content">
+                    <HeroSection hero={hero}/>
+                    <ExperienceCampus/>
+                    <UniversityPartners/>
+                    <MarqueeRibbon/>
+                    <CoreMajors/>
+                    <UpcomingEvents/>
+                    <GraduateSuccess/>
+                    <AdmissionSteps/>
+                    <ProudNews/>
+                    <ContactSection/>
+                </main>
+                <Footer/>
+            </HeroRevealProvider>
+        </>
+    );
+
 }

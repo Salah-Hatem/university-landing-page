@@ -24,29 +24,51 @@ async function findGlobal<T extends keyof Config["globals"]>(
   return payload.findGlobal({ slug, depth: 2 });
 }
 
+// Wrap the cached fetch so a Vercel/Postgres connection failure degrades to the
+// bundled fallback design instead of crashing the page: every section's data.ts
+// transformer already renders complete defaults when handed `null`. The
+// try/catch sits OUTSIDE findGlobal's `'use cache'` boundary, so a failed fetch
+// is never cached — once the DB recovers, the next request re-fetches and caches
+// live content (catching inside would pin the fallback for `cacheLife("days")`).
+async function safeFindGlobal<T extends keyof Config["globals"]>(
+  slug: T,
+  extraTags: string[] = [],
+): Promise<Config["globals"][T] | null> {
+  try {
+    return await findGlobal(slug, extraTags);
+  } catch (err) {
+    console.error(
+      `[cms] Failed to load global "${slug}" from Vercel; rendering fallback content.`,
+      err,
+    );
+    return null;
+  }
+}
+
 // The header mega-menu embeds the `studies` collection, so a Study edit must
 // invalidate the header cache as well — declared via the cross-dependency tag.
-export const getHeader = () => findGlobal("header", [collectionTag("studies")]);
-export const getFooter = () => findGlobal("footer");
-export const getHomePage = () => findGlobal("homePage");
+export const getHeader = () =>
+  safeFindGlobal("header", [collectionTag("studies")]);
+export const getFooter = () => safeFindGlobal("footer");
+export const getHomePage = () => safeFindGlobal("homePage");
 
-export const getHeroSection = () => findGlobal("heroSection");
-export const getExperienceSection = () => findGlobal("experienceSection");
+export const getHeroSection = () => safeFindGlobal("heroSection");
+export const getExperienceSection = () => safeFindGlobal("experienceSection");
 // The section embeds `universities` docs via `featuredUniversities`, so an
 // edit to a University must invalidate this global's cache too.
 export const getUniversitiesSection = () =>
-  findGlobal("universitiesSection", [collectionTag("universities")]);
+  safeFindGlobal("universitiesSection", [collectionTag("universities")]);
 // Each of these embeds documents from a collection via a relationship, so an
 // edit to that collection must invalidate the global's cache too.
 export const getMarqueeRibbonSection = () =>
-  findGlobal("marqueeRibbonSection", [collectionTag("universities")]);
+  safeFindGlobal("marqueeRibbonSection", [collectionTag("universities")]);
 export const getCoreMajorsSection = () =>
-  findGlobal("coreMajorsSection", [collectionTag("programs")]);
+  safeFindGlobal("coreMajorsSection", [collectionTag("programs")]);
 export const getEventsSection = () =>
-  findGlobal("eventsSection", [collectionTag("events")]);
+  safeFindGlobal("eventsSection", [collectionTag("events")]);
 export const getGraduateSuccessSection = () =>
-  findGlobal("graduateSuccessSection", [collectionTag("graduateStories")]);
-export const getAdmissionsSection = () => findGlobal("admissionsSection");
+  safeFindGlobal("graduateSuccessSection", [collectionTag("graduateStories")]);
+export const getAdmissionsSection = () => safeFindGlobal("admissionsSection");
 export const getNewsSection = () =>
-  findGlobal("newsSection", [collectionTag("news")]);
-export const getContactSection = () => findGlobal("contactSection");
+  safeFindGlobal("newsSection", [collectionTag("news")]);
+export const getContactSection = () => safeFindGlobal("contactSection");

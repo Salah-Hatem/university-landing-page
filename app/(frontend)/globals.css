@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/*noinspection CssUnresolvedCustomProperty*/
 :root {
   --font-family-title: var(--font-futura-title), Futura, "Trebuchet MS", Arial,
   sans-serif;
@@ -35,7 +36,7 @@
   --font-size-h6: clamp(1.125rem, 1.055rem + 0.162vw, 1.25rem); /* 18 → 20 */
 
   /* Fluid body scale */
-  --font-size-body-1: clamp(1rem, 0.721rem + 0.649vw, 1.5rem); /* 16 → 24 */
+  --font-size-body-1: clamp(1rem, 0.421rem + 1.347vw, 1.5rem); /* 16 → 24 by tablet */
 
   /* Fluid button scale */
   --font-size-button-1: clamp(1rem, 0.861rem + 0.324vw, 1.25rem); /* 16 → 20 */
