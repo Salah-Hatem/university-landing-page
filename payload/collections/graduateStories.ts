@@ -52,6 +52,7 @@ export const GraduateStories: CollectionConfig = {
       required: true,
     },
     mediaField("image", "Image"),
+    mediaField("avatar", "Avatar"),
     orderField,
     activeField,
   ],

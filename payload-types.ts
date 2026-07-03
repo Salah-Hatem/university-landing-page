@@ -313,6 +313,7 @@ export interface GraduateStory {
   school?: string | null;
   quote: string;
   image?: (number | null) | Media;
+  avatar?: (number | null) | Media;
   /**
    * Lower numbers appear first.
    */
@@ -591,6 +592,7 @@ export interface GraduateStoriesSelect<T extends boolean = true> {
   school?: T;
   quote?: T;
   image?: T;
+  avatar?: T;
   order?: T;
   active?: T;
   updatedAt?: T;

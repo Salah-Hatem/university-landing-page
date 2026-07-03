@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "payload": "payload",
-    "generate:types": "payload generate:types"
+    "generate:types": "payload generate:types",
+    "seed": "tsx --env-file=.env.local seed/seed.ts"
   },
   "dependencies": {
     "@payloadcms/db-vercel-postgres": "^3.85.1",
@@ -30,8 +31,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4.3.2",
+    "tsx": "^4.22.4",
     "typescript": "^5.9.3"
   },
   "type": "module"
-
 }
