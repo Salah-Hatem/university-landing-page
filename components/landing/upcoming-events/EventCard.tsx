@@ -13,15 +13,13 @@ type EventItem = ReturnType<typeof getEventsData>["events"][number];
 
 type EventCardProps = {
     event: EventItem;
-    /** Eager-load the first card; lazy-load the rest. */
-    priority?: boolean;
 };
 
 /**
  * A single event slide: full-bleed image with the title/description anchored in
  * the bottom-left and an angular orange date badge nested into the top-right.
  */
-export function EventCard({ event, priority = false }: EventCardProps) {
+export function EventCard({ event }: EventCardProps) {
     return (
         <div className={`relative aspect-video shrink-0 select-none overflow-hidden min-w-147 w-full tablet:w-240 ${INTERACTIVE_CARD}`}>
             <Image
@@ -31,7 +29,6 @@ export function EventCard({ event, priority = false }: EventCardProps) {
                 sizes="(max-width: 1280px) 85vw, 960px"
                 className="pointer-events-none object-cover"
                 style={{ clipPath: EVENT_IMAGE_CLIP_PATH }}
-                priority={priority}
                 draggable={false}
             />
             <div

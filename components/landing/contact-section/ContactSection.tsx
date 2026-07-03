@@ -21,7 +21,6 @@ export function ContactSection({ contact }: ContactSectionProps) {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        // TODO: wire to backend / contact endpoint.
     }
 
     return (

@@ -28,28 +28,30 @@ export const HERO_FRAME = {
     width: 1330,
 } as const;
 
-// Transitions live inside each variant (not a parent `transition` prop) so they
-// reach the animating element — see the motion-variant-transition memo.
+
 export const frameVariants: Variants = {
-    // First paint: very slightly smaller so the frame eases in rather than
-    // popping. Poster stays fully opaque (no LCP penalty); same collapsed size
-    // as `collapsed`, so only `scale` moves — no layout animation.
     hidden: {
         height: HERO_FRAME.height,
         scale: 0.98,
         width: HERO_FRAME.width,
+        x: "-50%",
+        y: "-50%",
     },
     collapsed: {
         height: HERO_FRAME.height,
         scale: 1,
         transition: HERO_MOUNT_TRANSITION,
         width: HERO_FRAME.width,
+        x: "-50%",
+        y: "-50%",
     },
     expanded: {
         height: "100%",
         scale: 1,
         transition: HERO_EXPAND_TRANSITION,
         width: "100%",
+        x: "-50%",
+        y: "-50%",
     },
 };
 
@@ -63,8 +65,7 @@ export const contentVariants: Variants = {
     show: { opacity: 1, transition: HERO_REVEAL_TRANSITION, y: 0 },
 };
 
-// Header slides down in lockstep with the hero content reveal (driven by the same
-// signal via HeroRevealContext). `-193` matches the old `headerReveal` keyframe.
+
 export const headerVariants: Variants = {
     hidden: { y: -193 },
     show: { transition: HERO_REVEAL_TRANSITION, y: 0 },

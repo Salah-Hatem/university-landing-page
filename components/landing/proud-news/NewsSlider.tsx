@@ -32,8 +32,8 @@ export function NewsSlider({ news, cta }: NewsSliderProps) {
                 aria-label="Proud news"
             >
                 <div className="flex gap-xl mobile:gap-3xl">
-                    {news.map((item, i) => (
-                        <NewsCard key={item.id} news={item} priority={i === 0} />
+                    {news.map((item) => (
+                        <NewsCard key={item.id} news={item} />
                     ))}
                 </div>
             </div>

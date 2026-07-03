@@ -14,7 +14,11 @@ type EventsSliderProps = {
     cta?: ReactNode;
 };
 
-
+/**
+ * Upcoming-events slider. The interactive behaviour comes from Embla via the
+ * shared {@link useEmblaSlider} engine; this component wires the event cards, the
+ * reused prev/next controls, and the "explore all" CTA into it.
+ */
 export function EventsSlider({events, cta}: EventsSliderProps) {
     const {emblaRef, scrollPrev, scrollNext, atStart, atEnd} = useEmblaSlider();
 
@@ -28,8 +32,8 @@ export function EventsSlider({events, cta}: EventsSliderProps) {
                 aria-label="Upcoming events"
             >
                 <div className="flex gap-3xl">
-                    {events.map((event, i) => (
-                        <EventCard key={event.id} event={event} priority={i === 0}/>
+                    {events.map((event) => (
+                        <EventCard key={event.id} event={event}/>
                     ))}
                 </div>
             </div>

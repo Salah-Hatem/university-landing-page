@@ -72,9 +72,9 @@ export function HeroBackgroundVideo({
     const isExpanded = reduceMotion || isReady;
 
     return (
-        <div className="absolute inset-0 flex h-full w-full items-center justify-center">
+        <div className="absolute inset-0 h-full w-full">
             <motion.div
-                className={frameClass}
+                className={`${frameClass} absolute left-1/2 top-1/2`}
                 variants={frameVariants}
                 initial={reduceMotion ? "expanded" : "hidden"}
                 animate={isExpanded ? "expanded" : "collapsed"}

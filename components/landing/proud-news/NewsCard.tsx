@@ -9,15 +9,13 @@ type NewsItem = ReturnType<typeof getNewsData>["articles"][number];
 
 type NewsCardProps = {
     news: NewsItem;
-    /** Eager-load the first card; lazy-load the rest. */
-    priority?: boolean;
 };
 
 /**
  * A single news slide: angular clip-path photo with the faculty category, the
  * headline, and the publish date stacked beneath it.
  */
-export function NewsCard({ news, priority = false }: NewsCardProps) {
+export function NewsCard({ news }: NewsCardProps) {
     return (
         <div className={`flex flex-col gap-l shrink-0 mobile:gap-xl w-[328px] mobile:w-[592px] tablet:w-[540px] ${INTERACTIVE_CARD}`}>
             <Image
@@ -27,7 +25,6 @@ export function NewsCard({ news, priority = false }: NewsCardProps) {
                 height={360}
                 className="aspect-3/2 w-full object-cover"
                 style={{ clipPath: NEWS_IMAGE_CLIP_PATH }}
-                priority={priority}
             />
             <div className="flex flex-col gap-3.25 pl-3xl tablet:pl-0 w-full min-w-0">
                 <h3 className={`hidden mobile:block text-body-2 ${news.categoryClassName}`}>

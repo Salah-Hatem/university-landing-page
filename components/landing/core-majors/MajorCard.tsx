@@ -9,8 +9,6 @@ type Major = ReturnType<typeof getCoreMajorsData>["majors"][number];
 
 type MajorCardProps = {
     major: Major;
-    /** Eager-load the first card; lazy-load the rest. */
-    priority?: boolean;
 };
 
 /**
@@ -18,7 +16,7 @@ type MajorCardProps = {
  * major name and program count anchored in the bottom-left (padded to clear the
  * angled corner).
  */
-export function MajorCard({ major, priority = false }: MajorCardProps) {
+export function MajorCard({ major }: MajorCardProps) {
     return (
         <div
             className={`relative aspect-[548/542] w-[85vw] shrink-0 select-none overflow-hidden w-[318px] mobile:w-[652px] tablet:w-[548px] ${INTERACTIVE_CARD} `}
@@ -30,7 +28,6 @@ export function MajorCard({ major, priority = false }: MajorCardProps) {
                 fill
                 sizes="(max-width: 1280px) 85vw, 548px"
                 className="pointer-events-none object-cover "
-                priority={priority}
                 draggable={false}
             />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_60%,#000_100%)]" />
