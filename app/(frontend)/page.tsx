@@ -1,25 +1,25 @@
 import {AdmissionSteps} from "@/components/landing/admission-steps/AdmissionSteps";
-import ContactSection from "@/components/landing/contact-section/ContactSection";
+import {ContactSection} from "@/components/landing/contact-section/ContactSection";
 import {CoreMajors} from "@/components/landing/core-majors/CoreMajors";
 import {ExperienceCampus} from "@/components/landing/experience-campus/ExperienceCampus";
-import Footer from "@/components/landing/footer/Footer";
+import {Footer} from "@/components/landing/footer/Footer";
 import {GraduateSuccess} from "@/components/landing/graduate-success/GraduateSuccess";
 import {Header} from "@/components/landing/header/Header";
 import {HeroSection} from "@/components/landing/hero-section/HeroSection";
 import {MarqueeRibbon} from "@/components/landing/marquee-ribbon/MarqueeRibbon";
-import ProudNews from "@/components/landing/proud-news/ProudNews";
+import {ProudNews} from "@/components/landing/proud-news/ProudNews";
 import {UniversityPartners} from "@/components/landing/university-partners/UniversityPartners";
 import {UpcomingEvents} from "@/components/landing/upcoming-events/UpcomingEvents";
 import {HeroRevealProvider} from "@/components/landing/hero-section/HeroRevealContext";
 import {Metadata} from "next";
 import {
-    getAdmissionsSection,
+    getAdmissionsSection, getContactSection,
     getCoreMajorsSection, getEventsSection,
-    getExperienceSection, getGraduateSuccessSection,
+    getExperienceSection, getFooter, getGraduateSuccessSection,
     getHeader,
     getHeroSection,
     getHomePage,
-    getMarqueeRibbonSection,
+    getMarqueeRibbonSection, getNewsSection,
     getUniversitiesSection
 } from "@/lib/cms/landing";
 import {getHeaderData} from "@/components/landing/header/data";
@@ -31,6 +31,9 @@ import {getMarqueeData} from "@/components/landing/marquee-ribbon/data";
 import {getAdmissionsData} from "@/components/landing/admission-steps/data";
 import {getGraduateSuccessData} from "@/components/landing/graduate-success/data";
 import {getEventsData} from "@/components/landing/upcoming-events/data";
+import {getFooterData} from "@/components/landing/footer/data";
+import {getContactData} from "@/components/landing/contact-section/data";
+import {getNewsData} from "@/components/landing/proud-news/data";
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -59,6 +62,9 @@ export default async function Home() {
     const events = getEventsData(await getEventsSection());
     const graduates = getGraduateSuccessData(await getGraduateSuccessSection());
     const admissions = getAdmissionsData(await getAdmissionsSection());
+    const news = getNewsData(await getNewsSection());
+    const contact = getContactData(await getContactSection());
+    const footer = getFooterData(await getFooter());
 
 
     return (
@@ -75,10 +81,10 @@ export default async function Home() {
                     <UpcomingEvents events={events}/>
                     <GraduateSuccess graduates={graduates}/>
                     <AdmissionSteps admissions={admissions}/>
-                    <ProudNews/>
-                    <ContactSection/>
+                    <ProudNews news={news}/>
+                    <ContactSection contact={contact}/>
                 </main>
-                <Footer/>
+                <Footer footer={footer}/>
             </HeroRevealProvider>
         </>
     );
