@@ -5,43 +5,57 @@ import type { MarqueeRibbonSection, University } from "@/payload-types";
 /**
  * Continuous scroll speed in px/second.
  *
- *
  */
 export const MARQUEE_SPEED = 40;
 
+/** Shown on any band without a partner logo — the Figma grey "New Partnerships Soon" ribbon. */
 export const FALLBACK_LABEL = "New Partnerships Soon";
 
-/**
- * Logo/label copies rendered per marquee run.
- */
 export const LOGO_REPEAT = 12;
 
 /**
- * Design-fixed geometry for one diagonal ribbon.
+ * Bundled fallback partners, used when the matching CMS slot has no populated
+ * university. Authored as full Payload {@link University} records (mirroring
+ * `university-partners`' COVENTRY/NOVA) so their `marqueeLogo` flows through the
+ * same `normalizeMedia` path as live CMS data. `id: 0` + empty timestamps satisfy
+ * the generated type without casts.
  */
-type BandLayout = {
-    id: string;
-    /** Tailwind background utility backed by a design token (e.g. `bg-surface-nova`). */
-    backgroundClassName: string;
-    /** Direction the logos travel. */
-    direction: "left" | "right";
-    /** Tilt direction: -1 leans up-left, +1 leans up-right. Magnitude is fixed (4°). */
-    rotateSign: -1 | 1;
-    /** Vertical placement of the strip's centre (25% / 50% / 75% of the section height). */
-    position: "top" | "center" | "bottom";
-    /** Bundled logo used when the CMS slot has none; `null` renders the fallback label. */
-    defaultLogo: NormalizedMedia | null;
+const COVENTRY_FALLBACK: University = {
+    id: 0,
+    name: "Coventry University",
+    marqueeLogo: {
+        id: 0,
+        alt: "Coventry University",
+        url: "/img/coventry-marquee.png",
+        updatedAt: "",
+        createdAt: "",
+    },
+    updatedAt: "",
+    createdAt: "",
 };
 
+const NOVA_FALLBACK: University = {
+    id: 0,
+    name: "NOVA University Lisbon",
+    marqueeLogo: {
+        id: 0,
+        alt: "NOVA University Lisbon",
+        url: "/img/nova-marquee.png",
+        updatedAt: "",
+        createdAt: "",
+    },
+    updatedAt: "",
+    createdAt: "",
+};
 
-const BAND_LAYOUTS: BandLayout[] = [
+const BAND_LAYOUTS = [
     {
         id: "coventry",
         backgroundClassName: "bg-surface-coventry",
         direction: "left",
         rotateSign: -1,
         position: "top",
-        defaultLogo: { url: "/img/coventry-marquee.png", alt: "Coventry University" },
+        defaultUniversity: COVENTRY_FALLBACK,
     },
     {
         id: "nova",
@@ -49,7 +63,7 @@ const BAND_LAYOUTS: BandLayout[] = [
         direction: "right",
         rotateSign: 1,
         position: "center",
-        defaultLogo: { url: "/img/nova-marquee.png", alt: "NOVA University Lisbon" },
+        defaultUniversity: NOVA_FALLBACK,
     },
     {
         id: "fallback",
@@ -57,9 +71,9 @@ const BAND_LAYOUTS: BandLayout[] = [
         direction: "left",
         rotateSign: -1,
         position: "bottom",
-        defaultLogo: null,
+        defaultUniversity: null,
     },
-];
+] as const;
 
 function isPopulatedUniversity(
     value: number | University | null | undefined,
@@ -70,19 +84,20 @@ function isPopulatedUniversity(
 /**
  * Zip the fixed band layouts with CMS logos by index: each slot takes the marquee
  * logo of its first populated university, falling back to the layout's bundled
- * default (or the label ribbon) when the CMS provides nothing.
+ * default (or the label ribbon) when the CMS provides nothing. CMS bands beyond
+ * the three fixed slots are ignored to preserve the Figma layout.
  */
 export function getMarqueeData(section?: MarqueeRibbonSection | null) {
     const sectionBands = section?.bands ?? [];
 
-    const bands = BAND_LAYOUTS.map(({ defaultLogo, ...layout }, index) => {
-        const primary = (sectionBands[index]?.universities ?? []).find(
-            isPopulatedUniversity,
-        );
+    const bands = BAND_LAYOUTS.map(({ defaultUniversity, ...layout }, index) => {
+        const primary =
+            (sectionBands[index]?.universities ?? []).find(isPopulatedUniversity) ??
+            defaultUniversity;
         const media = normalizeMedia(primary?.marqueeLogo);
         const logo: NormalizedMedia | null = media
             ? { ...media, alt: media.alt || primary?.name || "" }
-            : defaultLogo;
+            : null;
 
         return { ...layout, logo };
     });
