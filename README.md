@@ -4,8 +4,8 @@ A pixel-perfect, fully CMS-driven university landing page built for the Eng Tech
 
 **Stack:** Next.js 16 (App Router, Cache Components) · Payload CMS 3 (embedded) · TypeScript · Tailwind CSS 4 · Motion · Embla Carousel · Postgres · Vercel Blob
 
-- **Live demo:** `<your-deployed-url>`
-- **Payload admin:** `<your-deployed-url>/admin`
+- **Live demo:** https://university-landing-page-rho.vercel.app/
+- **Payload admin:** https://university-landing-page-rho.vercel.app/admin
 
 ---
 
@@ -59,19 +59,7 @@ pnpm build && pnpm start
 
 Other scripts: `pnpm lint`, `pnpm generate:types` (regenerates `payload-types.ts` after schema changes).
 
----
 
-## Payload Admin & Editing Content
-
-Open **`/admin`**.
-
-- **Local / fresh database:** Payload shows a **"Create your first user"** screen — sign up with any email + password. That account has full admin access.
-- **Live demo:** use the credentials below (public signup is disabled once the first user exists):
-
-  | | |
-    | --- | --- |
-  | Email | `<demo-admin-email>` |
-  | Password | `<demo-admin-password>` |
 
 ### How the content is organized
 
